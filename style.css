@@ -64,8 +64,8 @@ button:hover {
 /* Background Elements */
 .background-img {
   position: fixed;
-  width: 120px;
-  height: 120px;
+  width: 200px; /* Larger circles */
+  height: 200px;
   border-radius: 50%;
   object-fit: cover;
   opacity: 0.9;
@@ -122,9 +122,6 @@ button:hover {
   h1 { font-size: 1.8em; }
   .buttons { gap: 15px; }
   button { padding: 12px 25px; }
-  .background-img { width: 80px; height: 80px; }
+  .background-img { width: 150px; height: 150px; } /* Slightly smaller on mobile */
   .personalized-section { width: 90%; }
-}
-  h1 { font-size: 1.5em; }
-  button { padding: 15px 30px; }
 }
