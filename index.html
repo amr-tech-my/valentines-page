@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be My Valentine?</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Main content container -->
+  <div class="container">
+    <!-- Top image that alternates on "No" interactions -->
+    <img id="topImage" src="https://via.placeholder.com/150/FF0000/FFFFFF?text=Image+1" alt="Valentine Image">
+    <!-- The main question -->
+    <h1 id="question">Will you be my valentine bby ?</h1>
+    <!-- Yes/No buttons -->
+    <div class="buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+    <!-- Optional: Personalized love letter section -->
+    <div style="margin-top:20px;">
+      <input type="text" id="nameInput" placeholder="Your name">
+      <button id="submitName">Submit</button>
+    </div>
+    <div id="personalizedMessage"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
