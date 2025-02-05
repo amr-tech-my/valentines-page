@@ -64,8 +64,8 @@ button:hover {
 /* Background Elements */
 .background-img {
   position: fixed;
-  width: 500px; /* Larger circles */
-  height: 500px;
+  width: 200px; /* Larger circles */
+  height: 200px;
   border-radius: 50%;
   object-fit: cover;
   opacity: 0.9;
