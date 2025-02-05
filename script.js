@@ -1,130 +1,157 @@
 /**********************
  * Configuration Data *
  **********************/
-/* Base Styles */
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #FFB6C1;
-  overflow-x: hidden;
-  position: relative;
-  font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="red" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z"/></svg>'), auto;
+// Initialize Audio Context
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
+// DOM Elements
+const elements = {
+  noBtn: document.getElementById('noBtn'),
+  yesBtn: document.getElementById('yesBtn'),
+  topImage: document.getElementById('topImage'),
+  question: document.getElementById('question'),
+  playMusic: document.getElementById('playMusic'),
+  nameInput: document.getElementById('nameInput'),
+  submitName: document.getElementById('submitName'),
+  personalizedMessage: document.getElementById('personalizedMessage'),
+  bgMusic: document.getElementById('bg-music')
+};
+
+// Configuration
+const config = {
+  noMessages: [
+    "Are you sure?",
+    "Bby please?",
+    "Don't do this to me :(",
+    "You're breaking my heart!"
+  ],
+  secretMessages: [
+    "I'll keep asking!",
+    "You can't escape!",
+    "My heart belongs to you!",
+    "❤️ Forever yours ❤️"
+  ],
+  images: [
+    "454715500_1145191403225797_7536756696049058955_n.jpg",
+    "455025337_476367281817781_1421241229018967998_n.jpg",
+    "455071218_1064163268705080_1772528308917382692_n.jpg",
+    "WhatsApp Image 2025-02-05 at 10.06.44 PM.jpeg"
+  ],
+  currentNoIndex: 0,
+  currentSecretIndex: 0,
+  currentImageIndex: 0
+};
+
+// Preload Images
+function preloadImages() {
+  config.images.forEach(url => {
+    const img = new Image();
+    img.src = url;
+    img.onerror = () => console.error(`Error loading image: ${url}`);
+  });
 }
 
-/* Container Styles */
-.container {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  z-index: 2;
+// Sound Effects
+function playSound(freq = 440, type = 'sine') {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  
+  const oscillator = audioCtx.createOscillator();
+  const gainNode = audioCtx.createGain();
+  
+  oscillator.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+  
+  oscillator.type = type;
+  oscillator.frequency.value = freq;
+  gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+  
+  oscillator.start();
+  gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+  oscillator.stop(audioCtx.currentTime + 0.5);
 }
 
-/* Image Styling */
-#topImage {
-  max-width: 200px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  margin-bottom: 30px;
-  transition: transform 0.3s ease;
+// No Button Behavior
+function handleNoButton() {
+  // Update messages
+  elements.noBtn.textContent = config.noMessages[config.currentNoIndex];
+  config.currentNoIndex = (config.currentNoIndex + 1) % config.noMessages.length;
+  
+  // Random secret message
+  if (Math.random() < 0.3) {
+    elements.question.textContent = config.secretMessages[config.currentSecretIndex];
+    config.currentSecretIndex = (config.currentSecretIndex + 1) % config.secretMessages.length;
+  }
+  
+  // Change image
+  config.currentImageIndex = (config.currentImageIndex + 1) % config.images.length;
+  elements.topImage.src = config.images[config.currentImageIndex];
+  
+  // Move button
+  const viewportWidth = window.innerWidth - elements.noBtn.offsetWidth;
+  const viewportHeight = window.innerHeight - elements.noBtn.offsetHeight;
+  elements.noBtn.style.position = "absolute";
+  elements.noBtn.style.left = `${Math.random() * viewportWidth}px`;
+  elements.noBtn.style.top = `${Math.random() * viewportHeight}px`;
+  
+  playSound(300, 'square');
 }
 
-#topImage:hover {
-  transform: rotate(-2deg) scale(1.05);
+// Yes Button Celebration
+function handleYesButton() {
+  playSound(600, 'triangle');
+  confetti({
+    particleCount: 150,
+    spread: 100,
+    origin: { y: 0.6 },
+    colors: ['#FF69B4', '#FF1493', '#FFFFFF']
+  });
+
+  document.body.innerHTML = `
+    <div class="celebration">
+      <h1>🎉 YAY! I LOVE YOU! 🎉</h1>
+      <img src="https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif" 
+           alt="Celebration" 
+           style="max-width: 300px; margin-top: 20px;">
+    </div>
+  `;
 }
 
-/* Button Styling */
-.buttons {
-  margin: 30px 0;
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
+// Event Listeners
+function initializeEventListeners() {
+  // Button interactions
+  elements.noBtn.addEventListener('mouseenter', handleNoButton);
+  elements.noBtn.addEventListener('click', handleNoButton);
+  elements.noBtn.addEventListener('touchstart', handleNoButton);
+  
+  elements.yesBtn.addEventListener('click', handleYesButton);
+  
+  // Music controls
+  elements.playMusic.addEventListener('click', () => {
+    elements.bgMusic.play();
+    elements.playMusic.textContent = '🎵 Music Playing';
+    setTimeout(() => {
+      elements.playMusic.textContent = '🎵 Play Music';
+    }, 2000);
+  });
+  
+  // Personalized message
+  elements.submitName.addEventListener('click', () => {
+    const name = elements.nameInput.value.trim();
+    if (name) {
+      elements.personalizedMessage.textContent = `💌 Dear ${name}, you make every moment magical! 💌`;
+      elements.nameInput.value = '';
+    } else {
+      elements.personalizedMessage.textContent = 'Please enter your name first! 😊';
+    }
+  });
 }
 
-button {
-  padding: 15px 35px;
-  font-size: 1.1em;
-  border: none;
-  border-radius: 25px;
-  background: linear-gradient(45deg, #FF69B4, #FF1493);
-  color: white;
-  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-  transition: all 0.3s ease;
-  cursor: pointer;
+// Initialize App
+function init() {
+  preloadImages();
+  initializeEventListeners();
 }
 
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
-}
-
-/* Background Elements */
-.background-img {
-  position: fixed;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  opacity: 0.9;
-  z-index: 1;
-  animation: float 6s ease-in-out infinite;
-}
-
-.img1 { top: 10%; left: 5%; }
-.img2 { top: 25%; right: 5%; }
-.img3 { bottom: 15%; left: 5%; }
-.img4 { bottom: 5%; right: 5%; }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
-}
-
-/* Music Controls */
-.music-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background: rgba(255,255,255,0.9);
-  color: #FF1493;
-  border-radius: 30px;
-  z-index: 100;
-}
-
-/* Personalized Message Section */
-.personalized-section {
-  margin-top: 40px;
-  max-width: 400px;
-}
-
-#nameInput {
-  padding: 12px;
-  border: 2px solid #FF69B4;
-  border-radius: 25px;
-  margin-right: 10px;
-  width: 200px;
-}
-
-#personalizedMessage {
-  margin-top: 20px;
-  font-size: 1.2em;
-  color: #FF1493;
-  min-height: 50px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  #topImage { max-width: 150px; }
-  h1 { font-size: 1.8em; }
-  .buttons { gap: 15px; }
-  button { padding: 12px 25px; }
-  .background-img { width: 80px; height: 80px; }
-  .personalized-section { width: 90%; }
-}
+// Start Application
+document.addEventListener('DOMContentLoaded', init);
