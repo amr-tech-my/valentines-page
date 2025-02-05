@@ -29,10 +29,10 @@ const config = {
     "❤️ Forever yours ❤️"
   ],
   images: [
-    "454715500_1145191403225797_7536756696049058955_n.jpg",
-    "455025337_476367281817781_1421241229018967998_n.jpg",
-    "455071218_1064163268705080_1772528308917382692_n.jpg",
-    "WhatsApp Image 2025-02-05 at 10.06.44 PM.jpeg"
+    "OIP.jpg",
+    "download (1).jpg",
+    "OIP (1).jpg",
+    "OIP (2).jpg"
   ],
   currentNoIndex: 0,
   currentSecretIndex: 0,
