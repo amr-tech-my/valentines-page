@@ -1,105 +1,130 @@
 /**********************
  * Configuration Data *
  **********************/
-const noButtonMessages = [
-  "are you sure?",
-  "bby please?",
-  "Don't do this to me :(",
-  "you're breaking my heart TvT"
-];
-let noMessageIndex = 0;
-
-const secretMessages = ["I'll keep asking!", "You can't escape!", "❤️"];
-let secretMessageIndex = 0;
-
-const imageArray = [
-  "454715500_1145191403225797_7536756696049058955_n.jpg",
-  "455025337_476367281817781_1421241229018967998_n.jpg",
-  "455071218_1064163268705080_1772528308917382692_n.jpg",
-  "WhatsApp Image 2025-02-05 at 10.06.44 PM.jpeg"
-];
-let imageIndex = 0;
-
-// Preload images
-imageArray.forEach(url => {
-  const img = new Image();
-  img.src = url;
-});
-
-/****************************
- * DOM Elements References  *
- ****************************/
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const topImage = document.getElementById("topImage");
-const nameInput = document.getElementById("nameInput");
-const submitName = document.getElementById("submitName");
-const personalizedMessage = document.getElementById("personalizedMessage");
-
-// Create an Audio Context for sound effects
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new AudioContext();
-
-/****************************
- * Sound Effect Function    *
- ****************************/
-function playSound(frequency) {
-  const oscillator = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
-  oscillator.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  oscillator.type = "sine";
-  oscillator.frequency.value = frequency;
-  oscillator.start();
-  gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.2);
-  oscillator.stop(audioCtx.currentTime + 0.2);
+/* Base Styles */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #FFB6C1;
+  overflow-x: hidden;
+  position: relative;
+  font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="red" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z"/></svg>'), auto;
 }
 
-/****************************
- * No Button Behavior Setup *
- ****************************/
-function moveNoButton() {
-  noBtn.textContent = noButtonMessages[noMessageIndex];
-  noMessageIndex = (noMessageIndex + 1) % noButtonMessages.length;
-  
-  if (Math.random() < 0.3) {
-    document.getElementById("question").textContent = secretMessages[secretMessageIndex];
-    secretMessageIndex = (secretMessageIndex + 1) % secretMessages.length;
-  } else {
-    document.getElementById("question").textContent = "Will you be my valentine bby ?";
-  }
-
-  imageIndex = (imageIndex + 1) % imageArray.length;
-  topImage.src = imageArray[imageIndex];
-
-  playSound(300);
-
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  noBtn.style.position = "absolute";
-  noBtn.style.left = Math.random() * (vw - noBtn.offsetWidth) + "px";
-  noBtn.style.top = Math.random() * (vh - noBtn.offsetHeight) + "px";
+/* Container Styles */
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
 }
 
-noBtn.addEventListener("mouseenter", moveNoButton);
-noBtn.addEventListener("click", moveNoButton);
-noBtn.addEventListener("touchstart", moveNoButton);
+/* Image Styling */
+#topImage {
+  max-width: 200px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  margin-bottom: 30px;
+  transition: transform 0.3s ease;
+}
 
-yesBtn.addEventListener("click", () => {
-  playSound(600);
-  confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+#topImage:hover {
+  transform: rotate(-2deg) scale(1.05);
+}
 
-  document.body.innerHTML = `
-    <div class="celebration">
-      <h1>🎉 YAY! I LOVE YOU! 🎉</h1>
-      <img src="https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif">
-    </div>
-  `;
-});
+/* Button Styling */
+.buttons {
+  margin: 30px 0;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-submitName.addEventListener("click", () => {
-  const name = nameInput.value.trim();
-  if (name) {
-    personalizedMessage.textContent = `Dear ${name}, you make my heart flutter! ❤️`;
-  }
-});
+button {
+  padding: 15px 35px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(45deg, #FF69B4, #FF1493);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+}
+
+/* Background Elements */
+.background-img {
+  position: fixed;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: 0.9;
+  z-index: 1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.img1 { top: 10%; left: 5%; }
+.img2 { top: 25%; right: 5%; }
+.img3 { bottom: 15%; left: 5%; }
+.img4 { bottom: 5%; right: 5%; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Music Controls */
+.music-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.9);
+  color: #FF1493;
+  border-radius: 30px;
+  z-index: 100;
+}
+
+/* Personalized Message Section */
+.personalized-section {
+  margin-top: 40px;
+  max-width: 400px;
+}
+
+#nameInput {
+  padding: 12px;
+  border: 2px solid #FF69B4;
+  border-radius: 25px;
+  margin-right: 10px;
+  width: 200px;
+}
+
+#personalizedMessage {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #FF1493;
+  min-height: 50px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #topImage { max-width: 150px; }
+  h1 { font-size: 1.8em; }
+  .buttons { gap: 15px; }
+  button { padding: 12px 25px; }
+  .background-img { width: 80px; height: 80px; }
+  .personalized-section { width: 90%; }
+}
