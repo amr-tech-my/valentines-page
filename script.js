@@ -1,10 +1,6 @@
 /**********************
  * Configuration Data *
  **********************/
-// Initialize Audio Context
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new AudioContext();
-
 // DOM Elements
 const elements = {
   noBtn: document.getElementById('noBtn'),
@@ -15,7 +11,7 @@ const elements = {
   nameInput: document.getElementById('nameInput'),
   submitName: document.getElementById('submitName'),
   personalizedMessage: document.getElementById('personalizedMessage'),
-  bgMusic: document.getElementById('bg-music')
+  youtubeMusic: document.getElementById('youtubeMusic')
 };
 
 // Configuration
@@ -33,43 +29,15 @@ const config = {
     "❤️ Forever yours ❤️"
   ],
   images: [
-    "OIP.jpg",
-    "download (1).jpg",
-    "OIP (2).jpg",
-    "OIP (1).jpg"
+    "454715500_1145191403225797_7536756696049058955_n.jpg",
+    "455025337_476367281817781_1421241229018967998_n.jpg",
+    "455071218_1064163268705080_1772528308917382692_n.jpg",
+    "WhatsApp Image 2025-02-05 at 10.06.44 PM.jpeg"
   ],
   currentNoIndex: 0,
   currentSecretIndex: 0,
   currentImageIndex: 0
 };
-
-// Preload Images
-function preloadImages() {
-  config.images.forEach(url => {
-    const img = new Image();
-    img.src = url;
-    img.onerror = () => console.error(`Error loading image: ${url}`);
-  });
-}
-
-// Sound Effects
-function playSound(freq = 440, type = 'sine') {
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  
-  const oscillator = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
-  
-  oscillator.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  
-  oscillator.type = type;
-  oscillator.frequency.value = freq;
-  gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-  
-  oscillator.start();
-  gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-  oscillator.stop(audioCtx.currentTime + 0.5);
-}
 
 // No Button Behavior
 function handleNoButton() {
@@ -93,13 +61,10 @@ function handleNoButton() {
   elements.noBtn.style.position = "absolute";
   elements.noBtn.style.left = `${Math.random() * viewportWidth}px`;
   elements.noBtn.style.top = `${Math.random() * viewportHeight}px`;
-  
-  playSound(300, 'square');
 }
 
 // Yes Button Celebration
 function handleYesButton() {
-  playSound(600, 'triangle');
   confetti({
     particleCount: 150,
     spread: 100,
@@ -128,11 +93,8 @@ function initializeEventListeners() {
   
   // Music controls
   elements.playMusic.addEventListener('click', () => {
-    elements.bgMusic.play();
+    elements.youtubeMusic.style.display = 'block';
     elements.playMusic.textContent = '🎵 Music Playing';
-    setTimeout(() => {
-      elements.playMusic.textContent = '🎵 Play Music';
-    }, 2000);
   });
   
   // Personalized message
@@ -149,7 +111,6 @@ function initializeEventListeners() {
 
 // Initialize App
 function init() {
-  preloadImages();
   initializeEventListeners();
 }
 
