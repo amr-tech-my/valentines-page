@@ -55,6 +55,20 @@ button:hover {
   transform: scale(1.05);
 }
 
+.background-img {
+    position: absolute;
+    width: 100px; /* Adjust size */
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+.img1 { top: 10%; left: 10%; }
+.img2 { top: 20%; right: 15%; }
+.img3 { bottom: 15%; left: 30%; }
+.img4 { bottom: 10%; right: 10%; }
+
 /* Animated Background Circles */
 .bg-circle {
   position: absolute;
