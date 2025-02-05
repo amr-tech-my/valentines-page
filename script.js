@@ -13,10 +13,10 @@ const secretMessages = ["I'll keep asking!", "You can't escape!", "❤️"];
 let secretMessageIndex = 0;
 
 const imageArray = [
-  "454715500_1145191403225797_7536756696049058955_n.jpg",
-  "455025337_476367281817781_1421241229018967998_n.jpg",
-  "455071218_1064163268705080_1772528308917382692_n.jpg",
-  "WhatsApp Image 2025-02-05 at 10.06.44 PM.jpeg"
+  "https://raw.githubusercontent.com/amr-tech-my/valentines-page/main/454715500_1145191403225797_7536756696049058955_n.jpg",
+  "https://raw.githubusercontent.com/amr-tech-my/valentines-page/main/455025337_476367281817781_1421241229018967998_n.jpg",
+  "https://raw.githubusercontent.com/amr-tech-my/valentines-page/main/455071218_1064163268705080_1772528308917382692_n.jpg",
+  "https://raw.githubusercontent.com/amr-tech-my/valentines-page/main/WhatsApp Image 2025-02-05 at 10.06.44 PM.jpeg"
 ];
 let imageIndex = 0;
 
