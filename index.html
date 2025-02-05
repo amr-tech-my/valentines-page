@@ -8,17 +8,32 @@
 </head>
 <body>
 
+  <!-- Background Circular Images -->
+  <img src="454715500_1145191403225797_7536756696049058955_n.jpg" class="background-img img1">
+  <img src="455025337_476367281817781_1421241229018967998_n.jpg" class="background-img img2">
+  <img src="455071218_1064163268705080_1772528308917382692_n.jpg" class="background-img img3">
+  <img src="WhatsApp Image 2025-02-05 at 10.06.44 PM.jpeg" class="background-img img4">
+
+  <!-- Background Music -->
+  <audio id="bg-music" autoplay loop>
+    <source src="laufey-valentine.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
   <!-- Main content container -->
   <div class="container">
     <!-- Top image that alternates on "No" interactions -->
     <img id="topImage" src="454715500_1145191403225797_7536756696049058955_n.jpg" alt="Valentine Image">
+    
     <!-- The main question -->
     <h1 id="question">Will you be my valentine bby ?</h1>
+    
     <!-- Yes/No buttons -->
     <div class="buttons">
       <button id="yesBtn">Yes</button>
       <button id="noBtn">No</button>
     </div>
+    
     <!-- Optional: Personalized love letter section -->
     <div style="margin-top:20px;">
       <input type="text" id="nameInput" placeholder="Your name">
@@ -26,6 +41,20 @@
     </div>
     <div id="personalizedMessage"></div>
   </div>
+
+  <script>
+    // Ensure music plays when user interacts
+    document.addEventListener("DOMContentLoaded", function() {
+        let audio = document.getElementById("bg-music");
+        audio.play().catch(error => {
+            console.log("Autoplay blocked, waiting for user interaction.");
+        });
+
+        document.addEventListener("click", () => {
+            audio.play();
+        });
+    });
+  </script>
 
   <script src="script.js"></script>
 </body>
