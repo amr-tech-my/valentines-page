@@ -1,0 +1,76 @@
+/* Overall body styling with custom heart cursor */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #FFB6C1;
+  overflow: hidden;
+  position: relative;
+  font-family: Arial, sans-serif;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="red" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z"/></svg>'), auto;
+}
+
+/* Main content container styling */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 20px 0;
+  color: #333;
+}
+
+img {
+  max-width: 150px;
+  border-radius: 10px;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+/* Enhanced Button Styling */
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  margin: 0 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(45deg, #FF69B4, #FF1493);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #FF1493;
+  transform: scale(1.05);
+}
+
+/* Animated Background Circles */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.5;
+  background-color: rgba(255, 255, 255, 0.3);
+  animation: float 4s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  h1 { font-size: 1.5em; }
+  button { padding: 15px 30px; }
+}
