@@ -2,59 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Will You Be My Valentine?</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
+  <!-- Background Images -->
+  <img src="454715500_1145191403225797_7536756696049058955_n.jpg" class="background-img img1" alt="decorative heart">
+  <img src="455025337_476367281817781_1421241229018967998_n.jpg" class="background-img img2" alt="decorative heart">
+  <img src="455071218_1064163268705080_1772528308917382692_n.jpg" class="background-img img3" alt="decorative heart">
+  <img src="WhatsApp Image 2025-02-05 at 10.06.44 PM.jpeg" class="background-img img4" alt="decorative heart">
 
-  <!-- Background Circular Images -->
-  <img src="454715500_1145191403225797_7536756696049058955_n.jpg" class="background-img img1">
-  <img src="455025337_476367281817781_1421241229018967998_n.jpg" class="background-img img2">
-  <img src="455071218_1064163268705080_1772528308917382692_n.jpg" class="background-img img3">
-  <img src="WhatsApp Image 2025-02-05 at 10.06.44 PM.jpeg" class="background-img img4">
-
-  <!-- Background Music -->
-  <audio id="bg-music" autoplay loop>
+  <!-- Music Controls -->
+  <audio id="bg-music" loop>
     <source src="laufey-valentine.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
+    Your browser does not support audio
   </audio>
+  <button id="playMusic" class="music-toggle">🎵 Play Music</button>
 
-  <!-- Main content container -->
+  <!-- Main Content -->
   <div class="container">
-    <!-- Top image that alternates on "No" interactions -->
-    <img id="topImage" src="454715500_1145191403225797_7536756696049058955_n.jpg" alt="Valentine Image">
+    <img id="topImage" src="454715500_1145191403225797_7536756696049058955_n.jpg" alt="Valentine collage">
+    <h1 id="question">Will you be my valentine bby?</h1>
     
-    <!-- The main question -->
-    <h1 id="question">Will you be my valentine bby ?</h1>
-    
-    <!-- Yes/No buttons -->
     <div class="buttons">
       <button id="yesBtn">Yes</button>
       <button id="noBtn">No</button>
     </div>
-    
-    <!-- Optional: Personalized love letter section -->
-    <div style="margin-top:20px;">
+
+    <!-- Personalized Message Section -->
+    <div class="personalized-section">
       <input type="text" id="nameInput" placeholder="Your name">
-      <button id="submitName">Submit</button>
+      <button id="submitName">Create Message</button>
+      <div id="personalizedMessage"></div>
     </div>
-    <div id="personalizedMessage"></div>
   </div>
-
-  <script>
-    // Ensure music plays when user interacts
-    document.addEventListener("DOMContentLoaded", function() {
-        let audio = document.getElementById("bg-music");
-        audio.play().catch(error => {
-            console.log("Autoplay blocked, waiting for user interaction.");
-        });
-
-        document.addEventListener("click", () => {
-            audio.play();
-        });
-    });
-  </script>
 
   <script src="script.js"></script>
 </body>
